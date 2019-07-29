@@ -275,10 +275,10 @@
 	bkpt	AngelSWI
 #elif defined(__thumb2__)
 	/*  We are in thumb mode for startup on armv7 architectures.  */
-	AngelSWIAsm	AngelSWI
+	AngelSWIAsm (AngelSWI)
 #else
 	/*  We are always in ARM mode for startup on pre armv7 archs.  */
-	AngelSWIAsm	AngelSWI_ARM
+	AngelSWIAsm (AngelSWI_ARM)
 #endif
 	ldr	r0, .LC0	/*  Point at values read.  */
 
@@ -401,11 +401,7 @@ __change_mode:
 #else
 	movs	r0, #AngelSWI_Reason_GetCmdLine
 	ldr	r1, .LC30	/* Space for command line.  */
-#ifdef THUMB_VXM
-	bkpt	AngelSWI
-#else
- 	AngelSWIAsm	AngelSWI
-#endif
+	AngelSWIAsm (AngelSWI)
 	ldr	r1, .LC30
 	ldr	r1, [r1]
 #endif
